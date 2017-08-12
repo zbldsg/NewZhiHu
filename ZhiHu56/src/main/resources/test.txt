@@ -1,0 +1,39 @@
+AnswerMapper: 
+ 
+    //自己写的
+    List<Answer> selectByQuestionId(Integer questionId);
+    
+    		<!--根据问题的Id查询问题下的所有回答 -->
+	<select id="selectByQuestionId" parameterType="java.lang.Integer"
+		resultMap="ResultMapWithBLOBs">
+		select * from t_answer where question_id = #{question_id,jdbcType=INTEGER}
+	</select>
+    
+
+QuestionMapper:
+
+    //根据问题标题查询
+    Question selectByTitle(String title);
+    
+    	// 根据用户id查询
+	List<Question> selectByUserId(Integer userId);
+    
+      <!-- 根据问题标题查询 -->
+  <select id="selectByTitle" parameterType="String" resultMap="BaseResultMap">
+  		SELECT * FROM t_question WHERE title = #{title}
+  </select>
+  
+  
+  
+UserMapper:
+
+		// 用手机号查询，用来ajax检查手机号是否已被注册
+	User selectByPhone(String phone);
+	
+		<!-- 自定义查询 ,ajax来检查手机号是否已注册 -->
+	<select id="selectByPhone" parameterType="String" resultType="com.zhihu.model.User">
+		SELECT * FROM t_user WHERE phone = #{phone}
+	</select>
+	
+	
+	
